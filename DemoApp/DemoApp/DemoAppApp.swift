@@ -5,7 +5,7 @@
 //  Created by hassan uriostegui on 8/30/22.
 //
 
-import Datastore
+import DatastoreLib
 import SwiftUI
 
 @main

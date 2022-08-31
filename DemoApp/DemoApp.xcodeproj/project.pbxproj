@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C97674F28BF251400FE2AD6 /* Datastore in Frameworks */ = {isa = PBXBuildFile; productRef = 5C97674E28BF251400FE2AD6 /* Datastore */; };
+		5C0F679C28BF3463001ADEE4 /* DatastoreLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5C0F679B28BF3463001ADEE4 /* DatastoreLib */; };
 		5C97675128BF270100FE2AD6 /* Datastore+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C97675028BF270100FE2AD6 /* Datastore+Items.swift */; };
 		5CFCCF9D28BEE2B8001CD397 /* DemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFCCF9C28BEE2B8001CD397 /* DemoAppApp.swift */; };
 		5CFCCF9F28BEE2B8001CD397 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFCCF9E28BEE2B8001CD397 /* ContentView.swift */; };
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C97674F28BF251400FE2AD6 /* Datastore in Frameworks */,
+				5C0F679C28BF3463001ADEE4 /* DatastoreLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +159,7 @@
 			);
 			name = DemoApp;
 			packageProductDependencies = (
-				5C97674E28BF251400FE2AD6 /* Datastore */,
+				5C0F679B28BF3463001ADEE4 /* DatastoreLib */,
 			);
 			productName = DemoApp;
 			productReference = 5CFCCF9928BEE2B8001CD397 /* DemoApp.app */;
@@ -598,9 +598,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5C97674E28BF251400FE2AD6 /* Datastore */ = {
+		5C0F679B28BF3463001ADEE4 /* DatastoreLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Datastore;
+			productName = DatastoreLib;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

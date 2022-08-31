@@ -4,14 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "Datastore",
+    name: "DatastoreLib",
     platforms: [
         .iOS(.v13),
     ],
     products: [
         .library(
-            name: "Datastore",
-            targets: ["Datastore"]
+            name: "DatastoreLib",
+            targets: ["DatastoreLib"]
         ),
     ],
     dependencies: [
@@ -19,12 +19,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Datastore",
+            name: "DatastoreLib",
             dependencies: ["EasyStash"]
         ),
         .testTarget(
             name: "FrameworkTests",
-            dependencies: ["Datastore"]
+            dependencies: ["DatastoreLib"]
         ),
     ]
 )

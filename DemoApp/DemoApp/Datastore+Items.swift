@@ -1,5 +1,5 @@
 import Combine
-import Datastore
+import DatastoreLib
 import Foundation
 
 class Model: ObservableObject {
