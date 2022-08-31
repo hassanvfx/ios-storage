@@ -6,7 +6,7 @@ class Model: ObservableObject {
     struct State: Codable {
         var value = 0
     }
-
+    
     @Published var state = State()
     init() {}
     func increaseValue() {
@@ -18,25 +18,23 @@ class Model: ObservableObject {
 
 extension Model: DatastoreItem {
     var storageKey: String {
-        "store:v1"
+        "model:v1"
     }
-
+    
     var storagePublisher: AnyPublisher<Model.State, Never> {
         $state.eraseToAnyPublisher()
     }
-
+    
     func getStorageItem() -> Model.State {
         state
     }
-
+    
     func getStorageItemDefault() -> Model.State {
         Model.State()
     }
-
+    
     func setStorageItem(_ item: Model.State, completion: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            self.state = item
-            completion()
-        }
+        self.state = item
+        completion()
     }
 }
