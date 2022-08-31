@@ -5,22 +5,27 @@
 //  Created by hassan uriostegui on 8/30/22.
 //
 
+import Datastore
 import SwiftUI
-import Framework
-
-class Model:ObservableObject{
-    init(){
-        let framework = Framework()
-        framework.test()
-    }
-}
 
 @main
 struct DemoAppApp: App {
-    @ObservedObject var model = Model()
+    @StateObject var model = Model()
+    @StateObject var datastore = Datastore()
+    func setupDatastore() {
+        do {
+            try datastore.connect(model: model)
+        } catch {
+            print(error)
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(model)
+                .environmentObject(datastore)
+                .onAppear(perform: setupDatastore)
         }
     }
 }

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5CB21B4528BEE34B00B39783 /* Framework in Frameworks */ = {isa = PBXBuildFile; productRef = 5CB21B4428BEE34B00B39783 /* Framework */; };
+		5C97674F28BF251400FE2AD6 /* Datastore in Frameworks */ = {isa = PBXBuildFile; productRef = 5C97674E28BF251400FE2AD6 /* Datastore */; };
+		5C97675128BF270100FE2AD6 /* Datastore+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C97675028BF270100FE2AD6 /* Datastore+Items.swift */; };
 		5CFCCF9D28BEE2B8001CD397 /* DemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFCCF9C28BEE2B8001CD397 /* DemoAppApp.swift */; };
 		5CFCCF9F28BEE2B8001CD397 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFCCF9E28BEE2B8001CD397 /* ContentView.swift */; };
 		5CFCCFA128BEE2B9001CD397 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CFCCFA028BEE2B9001CD397 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C97675028BF270100FE2AD6 /* Datastore+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Datastore+Items.swift"; sourceTree = "<group>"; };
 		5CB21B4228BEE33A00B39783 /* ios-framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ios-framework"; path = ..; sourceTree = "<group>"; };
 		5CFCCF9928BEE2B8001CD397 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CFCCF9C28BEE2B8001CD397 /* DemoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppApp.swift; sourceTree = "<group>"; };
@@ -53,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CB21B4528BEE34B00B39783 /* Framework in Frameworks */,
+				5C97674F28BF251400FE2AD6 /* Datastore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +108,7 @@
 		5CFCCF9B28BEE2B8001CD397 /* DemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				5C97675028BF270100FE2AD6 /* Datastore+Items.swift */,
 				5CFCCF9C28BEE2B8001CD397 /* DemoAppApp.swift */,
 				5CFCCF9E28BEE2B8001CD397 /* ContentView.swift */,
 				5CFCCFA028BEE2B9001CD397 /* Assets.xcassets */,
@@ -156,7 +159,7 @@
 			);
 			name = DemoApp;
 			packageProductDependencies = (
-				5CB21B4428BEE34B00B39783 /* Framework */,
+				5C97674E28BF251400FE2AD6 /* Datastore */,
 			);
 			productName = DemoApp;
 			productReference = 5CFCCF9928BEE2B8001CD397 /* DemoApp.app */;
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C97675128BF270100FE2AD6 /* Datastore+Items.swift in Sources */,
 				5CFCCF9F28BEE2B8001CD397 /* ContentView.swift in Sources */,
 				5CFCCF9D28BEE2B8001CD397 /* DemoAppApp.swift in Sources */,
 			);
@@ -594,9 +598,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5CB21B4428BEE34B00B39783 /* Framework */ = {
+		5C97674E28BF251400FE2AD6 /* Datastore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Framework;
+			productName = Datastore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

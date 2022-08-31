@@ -1,5 +1,5 @@
-import XCTest
 @testable import Framework
+import XCTest
 
 final class FrameworkTests: XCTestCase {
     func testExample() throws {

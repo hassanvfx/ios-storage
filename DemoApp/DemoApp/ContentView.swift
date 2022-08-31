@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var model: Model
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        HStack {
+            Text("Persisted Value: \(model.state.value)")
+                .padding()
+            Button(action: model.increaseValue) {
+                Text("Increment Value")
+                    .padding()
+            }
+        }
     }
 }
 
