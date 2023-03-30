@@ -38,23 +38,23 @@ extension Datastore {
         }
     }
 
-    func unarchive<T: DatastoreItem>(model: T, completion: @escaping () -> Void = {}) throws {
+    func unarchive<T: DatastoreItem>(model: T, completion: @escaping () -> Void = {}) async throws {
         guard let storage = storage else {
             fatalError()
         }
-
-        let key = Datastore.global(key: model.storageKey)
-
-        do {
-            let state: T.ITEM = try storage.load(forKey: key, as: T.ITEM.self)
-            DispatchQueue.main.async {
+        Task{
+            let key = Datastore.global(key: model.storageKey)
+            
+            do {
+                
+                let state: T.ITEM = try storage.load(forKey: key, as: T.ITEM.self)
                 model.setStorageItem(state, completion: completion)
                 completion()
+                
+            } catch {
+                completion()
+                throw error
             }
-
-        } catch {
-            completion()
-            throw error
         }
     }
 }
