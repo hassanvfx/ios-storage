@@ -1,6 +1,5 @@
 //
 //  Storage+Pipeline.swift
-//  spree3d
 //
 //  Created by hassan uriostegui on 1/22/21.
 //
