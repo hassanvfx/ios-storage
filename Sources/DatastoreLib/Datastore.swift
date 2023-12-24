@@ -25,22 +25,21 @@ public class Datastore: ObservableObject {
 }
 
 extension Datastore {
+    func restore<T: DatastoreItem>(model: T) async throws {
+        try await unarchive(model: model)
+    }
+    func observeAndArchive<T: Any, T2: Error, ITEM: DatastoreItem>(_ publisher: AnyPublisher<T, T2>, model: ITEM, throttleMs: Int = Datastore.STORAGE_DELAY_MS) async throws {
+        publisher
+            .throttle(for: .milliseconds(throttleMs), scheduler: DispatchQueue.global(qos: .background), latest: true)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                try? self?.archive(model: model)
+            })
+            .store(in: &storageObservers)
+    }
+    
     func restoreAndObserve<T: DatastoreItem>(model: T) async throws {
         Task{
-            func restore<T: DatastoreItem>(model: T) async throws {
-                try await unarchive(model: model)
-            }
-            func observeAndArchive<T: Any, T2: Error, ITEM: DatastoreItem>(_ publisher: AnyPublisher<T, T2>, model: ITEM, throttleMs: Int = Datastore.STORAGE_DELAY_MS) async throws {
-                publisher
-                    .throttle(for: .milliseconds(throttleMs), scheduler: DispatchQueue.global(qos: .background), latest: true)
-                    .receive(on: DispatchQueue.main)
-                    .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
-                        try? self?.archive(model: model)
-                    })
-                    .store(in: &storageObservers)
-            }
-            
-            
             try await restore(model: model)
             try await observeAndArchive(model.storagePublisher, model: model)
             
