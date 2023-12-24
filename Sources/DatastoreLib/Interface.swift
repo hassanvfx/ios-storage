@@ -23,8 +23,6 @@ extension Datastore {
 
 public extension Datastore {
     func connect<T: DatastoreItem>(model: T) throws {
-        Task{
-            try await restoreAndObserve(model: model)
-        }
+        try restoreAndObserve(model: model)
     }
 }

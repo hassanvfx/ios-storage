@@ -38,11 +38,10 @@ extension Datastore {
             .store(in: &storageObservers)
     }
     
-    func restoreAndObserve<T: DatastoreItem>(model: T) async throws {
+    func restoreAndObserve<T: DatastoreItem>(model: T) throws {
         Task{
             try await restore(model: model)
             try await observeAndArchive(model.storagePublisher, model: model)
-            
         }
     }
     
