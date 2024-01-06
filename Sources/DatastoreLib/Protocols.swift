@@ -17,3 +17,9 @@ public protocol DatastoreItem {
     func setStorageItem(_ item: ITEM, completion: @escaping () -> Void)
     var storagePublisher: AnyPublisher<ITEM, Never> { get }
 }
+
+public extension DatastoreItem{
+    var storageEnprypted: Bool {
+        true
+    }
+}

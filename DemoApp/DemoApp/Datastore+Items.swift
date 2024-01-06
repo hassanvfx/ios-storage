@@ -21,10 +21,6 @@ extension Model: DatastoreItem {
         "model:v1"
     }
     
-    var storageEnprypted: Bool{
-        true
-    }
-    
     var storagePublisher: AnyPublisher<Model.State, Never> {
         $state.eraseToAnyPublisher()
     }
