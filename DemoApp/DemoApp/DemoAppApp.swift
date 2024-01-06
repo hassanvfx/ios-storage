@@ -13,10 +13,12 @@ struct DemoAppApp: App {
     @StateObject var model = Model()
     @StateObject var datastore = Datastore()
     func setupDatastore() {
-        do {
-            try datastore.connect(model: model)
-        } catch {
-            print(error)
+        Task{
+            do {
+                try await datastore.connect(model: model)
+            } catch {
+                print(error)
+            }
         }
     }
 

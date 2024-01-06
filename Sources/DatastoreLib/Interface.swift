@@ -22,7 +22,7 @@ extension Datastore {
 }
 
 public extension Datastore {
-    func connect<T: DatastoreItem>(model: T) throws {
-        try restoreAndObserve(model: model)
+    func connect<T: DatastoreItem>(model: T) async throws {
+        try await restoreAndObserve(model: model)
     }
 }

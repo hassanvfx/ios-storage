@@ -44,14 +44,15 @@ extension Datastore {
                 fatalError()
             }
             let key = Datastore.global(key: model.storageKey)
-            
             do {
                 let state: T.ITEM = try storage.load(forKey: key, as: T.ITEM.self)
                 model.setStorageItem(state){
                     continuation.resume()
                 }
             } catch {
-                continuation.resume(throwing: error)
+                model.setStorageItem(model.getStorageItemDefault()){
+                    continuation.resume()
+                }
             }
             
         }
