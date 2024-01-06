@@ -8,10 +8,10 @@
 import Combine
 import EasyStash
 import Foundation
-
+import CryptoKit
 public class Datastore: ObservableObject {
-    public init() {}
-
+  
+    internal var encryptionKey: SymmetricKey?
     var storageObservers = [AnyCancellable]()
     var storage: EasyStash.Storage? {
         do {
@@ -20,6 +20,18 @@ public class Datastore: ObservableObject {
         } catch {
             // LogService.assert(.storageManager, "Failed to create storage")
             return nil
+        }
+    }
+   
+
+    public init() {
+        if let storedKey = retrieveKeyFromKeychain() {
+            encryptionKey = SymmetricKey(data: storedKey)
+        } else {
+            let newKey = SymmetricKey(size: .bits256)
+            let keyData = newKey.withUnsafeBytes { Data(Array($0)) }
+            storeKeyToKeychain(keyData)
+            encryptionKey = newKey
         }
     }
 }

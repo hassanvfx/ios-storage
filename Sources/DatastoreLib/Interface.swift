@@ -8,14 +8,6 @@
 import Combine
 import Foundation
 
-public protocol DatastoreItem {
-    associatedtype ITEM: Codable
-    var storageKey: String { get }
-    func getStorageItem() -> ITEM
-    func getStorageItemDefault() -> ITEM
-    func setStorageItem(_ item: ITEM, completion: @escaping () -> Void)
-    var storagePublisher: AnyPublisher<ITEM, Never> { get }
-}
 
 extension Datastore {
     static let STORAGE_DELAY_MS = 1234
