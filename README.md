@@ -158,10 +158,10 @@ public protocol DatastoreItem {
     associatedtype ITEM: Codable
     var storageKey: String { get }
     var storageEnprypted: Bool { get }
+    var storagePublisher: AnyPublisher<ITEM, Never> { get }
     func getStorageItem() -> ITEM
     func getStorageItemDefault() -> ITEM
     func setStorageItem(_ item: ITEM, completion: @escaping () -> Void)
-    var storagePublisher: AnyPublisher<ITEM, Never> { get }
 }
 
 public extension DatastoreItem {
