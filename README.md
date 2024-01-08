@@ -52,7 +52,12 @@ struct DemoAppApp: App {
             do {
                 try await datastore.connect(model: model)
             } catch {
-                print(error)
+                if error._code == ErrorCodeForNewStore {
+                    // this is OK to pass
+                    return
+                } else {
+                    // handle error
+                }
             }
         }
     }
