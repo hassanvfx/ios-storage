@@ -65,23 +65,31 @@ extension Datastore {
                         let decoder = storage.options.decoder
                         
                         let state = try decoder.decode(T.ITEM.self, from: decryptedData)
-                        model.setStorageItem(state){
-                            continuation.resume()
+                        DispatchQueue.main.async{
+                            model.setStorageItem(state){
+                                continuation.resume()
+                            }
                         }
                     } catch {
-                        model.setStorageItem(model.getStorageItemDefault()){
-                            continuation.resume()
+                        DispatchQueue.main.async{
+                            model.setStorageItem(model.getStorageItemDefault()){
+                                continuation.resume()
+                            }
                         }
                     }
                     return
                 }
                 let state: T.ITEM = try storage.load(forKey: key, as: T.ITEM.self)
-                model.setStorageItem(state){
-                    continuation.resume()
+                DispatchQueue.main.async{
+                    model.setStorageItem(state){
+                        continuation.resume()
+                    }
                 }
             } catch {
-                model.setStorageItem(model.getStorageItemDefault()){
-                    continuation.resume()
+                DispatchQueue.main.async{
+                    model.setStorageItem(model.getStorageItemDefault()){
+                        continuation.resume()
+                    }
                 }
             }
             
