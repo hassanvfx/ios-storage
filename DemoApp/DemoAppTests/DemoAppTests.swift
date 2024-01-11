@@ -95,13 +95,13 @@ extension DatastoreTests {
         expectation.expectedFulfillmentCount = 2 // Set to the number of concurrent tasks
 
         // Perform the operation on two different threads
-        DispatchQueue.global(qos: .background).async {
-            self.model.increaseValue()
+        Task(priority: .background) {
+            await self.model.increaseValue()
             expectation.fulfill()
         }
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.model.increaseValue()
+        Task(priority: .background)  {
+            await self.model.increaseValue()
             expectation.fulfill()
         }
 
