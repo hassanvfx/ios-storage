@@ -6,29 +6,109 @@
 //
 
 @testable import DemoApp
+import DatastoreLib
 import XCTest
 
-class DemoAppTests: XCTestCase {
+class DatastoreTests: XCTestCase {
+    var model: Model!
+    var datastore: Datastore!
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        model = Model()
+        datastore = Datastore()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        model = nil
+        datastore = nil
+        super.tearDown()
+    }
+}
+
+extension DatastoreTests{
+    // Test Model's basic functionality
+    func testModelInitialState() {
+        XCTAssertEqual(model.state.value, 0, "Initial state value should be 0")
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    func testModelIncreaseValue() async {
+        let expectation = XCTestExpectation(description: "Value increases")
+        
+        // Perform the operation that you expect to complete asynchronously.
+        await model.increaseValue()
+        
+        // Wait for the async operation to complete
+        DispatchQueue.main.async {
+            expectation.fulfill() // Call this when the async operation completes
         }
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        // Perform your test assertion after the async operation is expected to be complete.
+        XCTAssertEqual(model.state.value, 1, "Value should be incremented")
+    }
+
+    // Test DatastoreItem conformance
+    func testStorageKey() {
+        XCTAssertEqual(model.storageKey, "model:v1", "Storage key should match")
+    }
+
+    func testGetStorageItem() {
+        let state = model.getStorageItem()
+        XCTAssertEqual(state.value, model.state.value, "State values should match")
+    }
+
+    func testGetStorageItemDefault() {
+        let defaultState = model.getStorageItemDefault()
+        XCTAssertEqual(defaultState.value, 0, "Default state value should be 0")
+    }
+
+    func testSetStorageItem() {
+        let newState = Model.State(value: 5)
+        let expectation = self.expectation(description: "setStorageItem")
+        model.setStorageItem(newState) {
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+        XCTAssertEqual(model.state.value, 5, "State should be updated")
+    }
+
+    func testModelIncreaseValueAsync() async {
+        let expectation = XCTestExpectation(description: "Async value increase")
+
+        // Start the asynchronous operation
+        await model.increaseValue()
+
+        // Since increaseValue is asynchronous and posts changes to the main queue,
+        // you should wait for the next run loop iteration for the changes to take effect.
+        DispatchQueue.main.async {
+            XCTAssertEqual(self.model.state.value, 1, "Value should be incremented")
+            expectation.fulfill()
+        }
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+    }
+    
+    func testModelThreadSafety() {
+        let expectation = XCTestExpectation(description: "Thread safety")
+        expectation.expectedFulfillmentCount = 2 // Set to the number of concurrent tasks
+
+        // Perform the operation on two different threads
+        DispatchQueue.global(qos: .background).async {
+            self.model.increaseValue()
+            expectation.fulfill()
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.model.increaseValue()
+            expectation.fulfill()
+        }
+
+        // Wait for the async operations to complete
+        wait(for: [expectation], timeout: 5.0)
+
+        // Test if the final value is what you expect it to be
+        XCTAssertEqual(self.model.state.value, 2, "Value should be incremented twice safely")
     }
 }

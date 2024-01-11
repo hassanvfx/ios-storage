@@ -9,10 +9,9 @@ class Model: ObservableObject {
     
     @Published var state = State()
     init() {}
+    @MainActor
     func increaseValue() {
-        DispatchQueue.main.async {
-            self.state.value = self.state.value + 1
-        }
+        self.state.value = self.state.value + 1
     }
 }
 

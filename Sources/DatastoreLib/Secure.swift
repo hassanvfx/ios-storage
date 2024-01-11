@@ -23,35 +23,35 @@ extension Datastore {
     }
 }
 
-public extension Datastore {
-    private var keychainKey: String {
-        "com.__data__store__.secureVault"
-    }
-    
-    func retrieveKeyFromKeychain() -> Data? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassKey,
-            kSecAttrApplicationTag as String: keychainKey,
-            kSecReturnData as String: kCFBooleanTrue!,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-        ]
-        var item: CFTypeRef?
-        if SecItemCopyMatching(query as CFDictionary, &item) == noErr {
-            return (item as? Data)
-        }
-        return nil
-    }
-    
-    func storeKeyToKeychain(_ data: Data) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassKey,
-            kSecAttrApplicationTag as String: keychainKey,
-            kSecValueData as String: data,
-        ]
-        SecItemAdd(query as CFDictionary, nil)
-    }
-    
-}
+//public extension Datastore {
+//    private var keychainKey: String {
+//        "com.__data__store__.secureVault"
+//    }
+//    
+//    func retrieveKeyFromKeychain() -> Data? {
+//        let query: [String: Any] = [
+//            kSecClass as String: kSecClassKey,
+//            kSecAttrApplicationTag as String: keychainKey,
+//            kSecReturnData as String: kCFBooleanTrue!,
+//            kSecMatchLimit as String: kSecMatchLimitOne,
+//        ]
+//        var item: CFTypeRef?
+//        if SecItemCopyMatching(query as CFDictionary, &item) == noErr {
+//            return (item as? Data)
+//        }
+//        return nil
+//    }
+//    
+//    func storeKeyToKeychain(_ data: Data) {
+//        let query: [String: Any] = [
+//            kSecClass as String: kSecClassKey,
+//            kSecAttrApplicationTag as String: keychainKey,
+//            kSecValueData as String: data,
+//        ]
+//        SecItemAdd(query as CFDictionary, nil)
+//    }
+//    
+//}
 
 extension Datastore {
     func encrypt(data: Data) throws -> Data {

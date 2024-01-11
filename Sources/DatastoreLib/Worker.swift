@@ -19,7 +19,7 @@ extension Datastore {
 }
 
 extension Datastore {
-    func archive<T: DatastoreItem>(model: T) throws {
+    func archive<T: DatastoreItem>(model: T) async throws {
         guard let storage = storage else {
             fatalError()
         }
