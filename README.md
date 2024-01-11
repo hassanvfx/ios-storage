@@ -13,18 +13,16 @@ background thread.
 # Features
 
 - **Simple Integration**: Easily integrates with SwiftUI applications.
-
 - **Configurable Encryption**: Provides options for securing stored
   data.
-
 - **Automatic Persistence**: Automatically handles the loading and
   saving of data.
-
 - **Efficient Background Operations**: Performs disk operations on a
   background thread.
-
-- **Conforms to ObservableObject**: Seamlessly works with SwiftUI’s data
+- **Conforms to ObservableObject**: Seamlessly works with SwiftUI’s data Publishers
   flow.
+- **AES.GCM + 256 SecureKey Encryption** As suggested by [Dave Poireir](https://www.linkedin.com/in/dave-poirier-a9b25a9/)
+- **Swift Actor for Tread Safety** As suggested by [Dave Poireir](https://www.linkedin.com/in/dave-poirier-a9b25a9/)
 
 # Installation
 
