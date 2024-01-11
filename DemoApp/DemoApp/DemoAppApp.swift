@@ -14,7 +14,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var datastore: Datastore?
     static let model = Model()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         // Initialize and setup datastore
         datastore = Datastore()
         setupDatastore()

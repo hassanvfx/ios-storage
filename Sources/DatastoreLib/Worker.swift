@@ -34,7 +34,7 @@ extension Datastore {
                         let data = try storage.options.encoder.encode(state)
                         let encryptedData = try encrypt(data: data)
                         let encryptedWrap = EncryptedWrap(data: encryptedData)
-                        
+
                         try storage.save(object: encryptedWrap, forKey: key)
                         bgTask.finish()
                     } catch {
@@ -60,19 +60,19 @@ extension Datastore {
                 guard model.storageEnprypted == false else {
                     do {
                         let encryptedWrap: EncryptedWrap = try storage.load(forKey: key, as: EncryptedWrap.self)
-                        
+
                         let decryptedData = try decrypt(data: encryptedWrap.data)
                         let decoder = storage.options.decoder
-                        
+
                         let state = try decoder.decode(T.ITEM.self, from: decryptedData)
-                        DispatchQueue.main.async{
-                            model.setStorageItem(state){
+                        DispatchQueue.main.async {
+                            model.setStorageItem(state) {
                                 continuation.resume()
                             }
                         }
                     } catch {
-                        DispatchQueue.main.async{
-                            model.setStorageItem(model.getStorageItemDefault()){
+                        DispatchQueue.main.async {
+                            model.setStorageItem(model.getStorageItemDefault()) {
                                 continuation.resume()
                             }
                         }
@@ -80,19 +80,18 @@ extension Datastore {
                     return
                 }
                 let state: T.ITEM = try storage.load(forKey: key, as: T.ITEM.self)
-                DispatchQueue.main.async{
-                    model.setStorageItem(state){
+                DispatchQueue.main.async {
+                    model.setStorageItem(state) {
                         continuation.resume()
                     }
                 }
             } catch {
-                DispatchQueue.main.async{
-                    model.setStorageItem(model.getStorageItemDefault()){
+                DispatchQueue.main.async {
+                    model.setStorageItem(model.getStorageItemDefault()) {
                         continuation.resume()
                     }
                 }
             }
-            
         }
     }
 }

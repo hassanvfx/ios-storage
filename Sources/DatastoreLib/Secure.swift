@@ -1,17 +1,18 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Eon Fluxor on 1/6/24.
 //
 
-import Foundation
 import CryptoKit
+import Foundation
 
 extension Datastore {
-    struct EncryptedWrap:Codable{
-        var data:Data
+    struct EncryptedWrap: Codable {
+        var data: Data
     }
+
     enum EncryptionError: Error {
         case combinedDataNil
         case encryptionFailed(String)
@@ -23,11 +24,11 @@ extension Datastore {
     }
 }
 
-//public extension Datastore {
+// public extension Datastore {
 //    private var keychainKey: String {
 //        "com.__data__store__.secureVault"
 //    }
-//    
+//
 //    func retrieveKeyFromKeychain() -> Data? {
 //        let query: [String: Any] = [
 //            kSecClass as String: kSecClassKey,
@@ -41,7 +42,7 @@ extension Datastore {
 //        }
 //        return nil
 //    }
-//    
+//
 //    func storeKeyToKeychain(_ data: Data) {
 //        let query: [String: Any] = [
 //            kSecClass as String: kSecClassKey,
@@ -50,27 +51,26 @@ extension Datastore {
 //        ]
 //        SecItemAdd(query as CFDictionary, nil)
 //    }
-//    
-//}
+//
+// }
 
 extension Datastore {
     func encrypt(data: Data) throws -> Data {
-        guard let encryptionKey else{
+        guard let encryptionKey else {
             assertionFailure()
             return Data()
         }
         return try encrypt(data, using: encryptionKey)
     }
-    
+
     func decrypt(data: Data) throws -> Data {
-        guard let encryptionKey else{
+        guard let encryptionKey else {
             assertionFailure()
             return Data()
         }
         return try decrypt(data, using: encryptionKey)
     }
 }
-
 
 extension Datastore {
     private func encrypt(_ data: Data, using key: SymmetricKey) throws -> Data {
@@ -85,7 +85,7 @@ extension Datastore {
             throw EncryptionError.encryptionFailed(error.localizedDescription)
         }
     }
-    
+
     private func decrypt(_ data: Data, using key: SymmetricKey) throws -> Data {
         do {
             let box = try AES.GCM.SealedBox(combined: data)

@@ -5,8 +5,8 @@
 //  Created by hassan uriostegui on 8/30/22.
 //
 
-@testable import DemoApp
 import DatastoreLib
+@testable import DemoApp
 import XCTest
 
 class DatastoreTests: XCTestCase {
@@ -26,7 +26,7 @@ class DatastoreTests: XCTestCase {
     }
 }
 
-extension DatastoreTests{
+extension DatastoreTests {
     // Test Model's basic functionality
     func testModelInitialState() {
         XCTAssertEqual(model.state.value, 0, "Initial state value should be 0")
@@ -34,17 +34,17 @@ extension DatastoreTests{
 
     func testModelIncreaseValue() async {
         let expectation = XCTestExpectation(description: "Value increases")
-        
+
         // Perform the operation that you expect to complete asynchronously.
         await model.increaseValue()
-        
+
         // Wait for the async operation to complete
         DispatchQueue.main.async {
             expectation.fulfill() // Call this when the async operation completes
         }
-        
+
         await fulfillment(of: [expectation], timeout: 1.0)
-        
+
         // Perform your test assertion after the async operation is expected to be complete.
         XCTAssertEqual(model.state.value, 1, "Value should be incremented")
     }
@@ -86,10 +86,10 @@ extension DatastoreTests{
             XCTAssertEqual(self.model.state.value, 1, "Value should be incremented")
             expectation.fulfill()
         }
-        
+
         await fulfillment(of: [expectation], timeout: 2.0)
     }
-    
+
     func testModelThreadSafety() {
         let expectation = XCTestExpectation(description: "Thread safety")
         expectation.expectedFulfillmentCount = 2 // Set to the number of concurrent tasks
@@ -109,6 +109,6 @@ extension DatastoreTests{
         wait(for: [expectation], timeout: 5.0)
 
         // Test if the final value is what you expect it to be
-        XCTAssertEqual(self.model.state.value, 2, "Value should be incremented twice safely")
+        XCTAssertEqual(model.state.value, 2, "Value should be incremented twice safely")
     }
 }

@@ -6,11 +6,10 @@
 //
 
 import Combine
+import CryptoKit
 import EasyStash
 import Foundation
-import CryptoKit
 public actor Datastore: ObservableObject {
-  
     internal var encryptionKey: SymmetricKey?
     var storageObservers = [AnyCancellable]()
     var storage: EasyStash.Storage? {
@@ -21,7 +20,6 @@ public actor Datastore: ObservableObject {
             return nil
         }
     }
-   
 
     public init() {
         let storeKeyToKeychain: (String, Data) -> Void = { key, data in
@@ -61,23 +59,23 @@ extension Datastore {
     func restore<T: DatastoreItem>(model: T) async throws {
         try await unarchive(model: model)
     }
+
     func observeAndArchive<T: Any, T2: Error, ITEM: DatastoreItem>(_ publisher: AnyPublisher<T, T2>, model: ITEM, throttleMs: Int) async throws {
         storageObservers.append(
-        publisher
-            .throttle(for: .milliseconds(throttleMs), scheduler: DispatchQueue.global(qos: .background), latest: true)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
-                guard let self else { return }
-                Task{
-                    try? await self.archive(model: model)
-                }
-            })
+            publisher
+                .throttle(for: .milliseconds(throttleMs), scheduler: DispatchQueue.global(qos: .background), latest: true)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                    guard let self else { return }
+                    Task {
+                        try? await self.archive(model: model)
+                    }
+                })
         )
     }
-    
+
     func restoreAndObserve<T: DatastoreItem>(model: T, throttleMs: Int) async throws {
         try await restore(model: model)
-        try await observeAndArchive(model.storagePublisher, model: model, throttleMs:Int(throttleMs))
+        try await observeAndArchive(model.storagePublisher, model: model, throttleMs: Int(throttleMs))
     }
-    
 }

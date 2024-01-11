@@ -1,12 +1,12 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Eon Fluxor on 1/6/24.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public protocol DatastoreItem {
     associatedtype ITEM: Codable
@@ -18,7 +18,7 @@ public protocol DatastoreItem {
     var storagePublisher: AnyPublisher<ITEM, Never> { get }
 }
 
-public extension DatastoreItem{
+public extension DatastoreItem {
     var storageEnprypted: Bool {
         true
     }

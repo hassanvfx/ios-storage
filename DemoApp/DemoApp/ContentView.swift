@@ -13,7 +13,7 @@ struct ContentView: View {
         HStack {
             Text("Persisted Value: \(appDelegate.state.value)")
                 .padding()
-            Button(action: {  appDelegate.increaseValue()}) {
+            Button(action: { appDelegate.increaseValue() }) {
                 Text("Increment Value")
                     .padding()
             }
