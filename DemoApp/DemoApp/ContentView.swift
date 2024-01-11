@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var model: Model
+    @ObservedObject var appDelegate = AppDelegate.model
     var body: some View {
         HStack {
-            Text("Persisted Value: \(model.state.value)")
+            Text("Persisted Value: \(appDelegate.state.value)")
                 .padding()
-            Button(action: model.increaseValue) {
+            Button(action: appDelegate.increaseValue) {
                 Text("Increment Value")
                     .padding()
             }

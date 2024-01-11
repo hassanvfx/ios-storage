@@ -7,27 +7,44 @@
 
 import DatastoreLib
 import SwiftUI
+import UIKit
 
-@main
-struct DemoAppApp: App {
-    @StateObject var model = Model()
-    @StateObject var datastore = Datastore()
-    func setupDatastore() {
-        Task{
+// AppDelegate class
+class AppDelegate: NSObject, UIApplicationDelegate {
+    var datastore: Datastore?
+    static let model = Model()
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Initialize and setup datastore
+        datastore = Datastore()
+        setupDatastore()
+        return true
+    }
+
+    private func setupDatastore() {
+        Task {
             do {
-                try await datastore.connect(model: model)
+                try await datastore?.connect(model: Self.model)
             } catch {
-                print(error)
+                if error._code == Datastore.ErrorCodeNewStore {
+                    // this is OK to pass
+                    return
+                } else {
+                    // handle error
+                }
             }
         }
     }
+}
+
+@main
+struct DemoAppApp: App {
+    // Register the AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(model)
-                .environmentObject(datastore)
-                .onAppear(perform: setupDatastore)
         }
     }
 }

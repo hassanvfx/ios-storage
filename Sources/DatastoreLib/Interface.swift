@@ -9,12 +9,13 @@ import Combine
 import Foundation
 
 
-extension Datastore {
-    static let STORAGE_DELAY_MS = 1234
+public extension Datastore {
+    static let ErrorCodeNewStore = 260
+    static let TinyDelay = 234
 }
 
 public extension Datastore {
-    func connect<T: DatastoreItem>(model: T) async throws {
-        try await restoreAndObserve(model: model)
+    func connect<T: DatastoreItem>(model: T, throttleMs:Int = Datastore.TinyDelay) async throws {
+        try await restoreAndObserve(model: model, throttleMs:throttleMs)
     }
 }
