@@ -42,17 +42,24 @@ Include `DatastoreLib` in your Swift Package Manager dependencies.
 import DatastoreLib
 import SwiftUI
 
-@main
-struct DemoAppApp: App {
-    @StateObject var model = Model()
-    @StateObject var datastore = Datastore()
+// AppDelegate class
+class AppDelegate: NSObject, UIApplicationDelegate {
+    var datastore: Datastore?
+    static let model = Model()
 
-    func setupDatastore() {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Initialize and setup datastore
+        datastore = Datastore()
+        setupDatastore()
+        return true
+    }
+
+    private func setupDatastore() {
         Task {
             do {
-                try await datastore.connect(model: model)
+                try await datastore?.connect(model: Self.model)
             } catch {
-                if error._code == ErrorCodeForNewStore {
+                if error._code == Datastore.ErrorCodeNewStore {
                     // this is OK to pass
                     return
                 } else {
@@ -61,12 +68,16 @@ struct DemoAppApp: App {
             }
         }
     }
+}
+
+@main
+struct DemoAppApp: App {
+    // Register the AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(model)
-                .onAppear(perform: setupDatastore)
         }
     }
 }
@@ -80,23 +91,16 @@ Create a `ContentView` that interacts with your model.
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var model: Model
-
+    @ObservedObject var appDelegate = AppDelegate.model
     var body: some View {
         HStack {
-            Text("Persisted Value: \(model.state.value)")
+            Text("Persisted Value: \(appDelegate.state.value)")
                 .padding()
-            Button(action: model.increaseValue) {
+            Button(action: appDelegate.increaseValue) {
                 Text("Increment Value")
                     .padding()
             }
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
 ```
